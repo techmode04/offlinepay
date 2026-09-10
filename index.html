@@ -6,8 +6,17 @@
   <title>OffPay - Offline UPI Payments</title>
   <meta name="description" content="Scan a QR code, pay with *99#. No internet needed." />
   
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#4F46E5" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+
+  <meta name="theme-color" content="#090D16" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="OffPay" />
+  <meta name="application-name" content="OffPay" />
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,7 +102,20 @@
           <h4 class="tile-title">Check Balance</h4>
           <span class="tile-code">*99*3#</span>
         </div>
+    </section>
+
+    <!-- PWA Install Banner Card -->
+    <section id="pwa-install-banner" class="pwa-banner-card">
+      <div class="pwa-banner-left">
+        <div class="pwa-banner-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </div>
+        <div>
+          <h4 class="pwa-banner-title">Install App on Mobile</h4>
+          <p class="pwa-banner-sub">Use OffPay offline anytime from Home Screen</p>
+        </div>
       </div>
+      <button id="pwa-install-main-btn" class="btn-install-pwa">Install</button>
     </section>
 
     <!-- Help & FAQ Action Button -->
@@ -163,8 +185,9 @@
           <button type="button" id="pay-ussd-btn" class="btn btn-primary btn-block">
             <span>Pay via USSD (*99#)</span>
           </button>
-          <button type="button" id="copy-ussd-btn" class="btn btn-secondary btn-block">
-            <span>Copy *99#</span>
+          <button type="button" id="copy-upi-btn" class="btn btn-secondary btn-block">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 4px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span>Copy UPI ID</span>
           </button>
           <button type="button" id="close-payment-modal-btn" class="btn btn-ghost btn-block">Cancel</button>
         </div>

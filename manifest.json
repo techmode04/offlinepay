@@ -1,22 +1,39 @@
 {
-  "name": "OfflinePay - Offline UPI & USSD Banking",
-  "short_name": "OfflinePay",
+  "name": "OffPay - Offline UPI Payments",
+  "short_name": "OffPay",
   "description": "Scan UPI QR codes and pay without internet via *99# USSD mobile banking.",
-  "start_url": "/",
+  "id": "offpay-ussd-app",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#090D16",
-  "theme_color": "#10B981",
   "orientation": "portrait",
+  "background_color": "#090D16",
+  "theme_color": "#090D16",
+  "categories": ["finance", "utilities"],
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310B981'/><path d='M25 50a25 25 0 0 1 50 0M15 35a40 40 0 0 1 70 0M35 65a15 15 0 0 1 30 0M50 80h.01' stroke='%23000' stroke-width='8' stroke-linecap='round' fill='none'/></svg>",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2310B981'/><path d='M25 50a25 25 0 0 1 50 0M15 35a40 40 0 0 1 70 0M35 65a15 15 0 0 1 30 0M50 80h.01' stroke='%23000' stroke-width='8' stroke-linecap='round' fill='none'/></svg>",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

@@ -1,17 +1,19 @@
-const CACHE_NAME = 'offline-pay-v2';
+const CACHE_NAME = 'offpay-pwa-v3';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/src/css/style.css',
-  '/src/js/app.js',
-  '/src/js/db.js',
-  '/src/js/ussd.js',
-  '/src/js/qr-scanner.js',
-  '/src/js/receipt.js',
-  '/src/js/reports.js',
-  '/src/js/backup.js',
-  '/src/js/pin-lock.js'
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-192.svg',
+  './icon-512.svg',
+  './apple-touch-icon.png',
+  './src/css/style.css',
+  './src/js/app.js',
+  './src/js/db.js',
+  './src/js/ussd.js',
+  './src/js/qr-scanner.js'
 ];
 
 self.addEventListener('install', event => {
