@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>OffPay - Offline UPI Payments</title>
+  <meta name="description" content="Scan a QR code, pay with *99#. No internet needed." />
+  
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#4F46E5" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./src/css/style.css" />
+</head>
+<body>
+  <div id="app" class="app-container">
+    
+    <!-- Top Header Bar -->
+    <header class="header-bar">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </div>
+        <h1 class="brand-title">OffPay</h1>
+      </div>
+
+      <div class="header-icons">
+        <button id="pwa-install-top-btn" class="icon-btn" title="Install App">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </button>
+        <button id="help-top-btn" class="icon-btn" title="Help & FAQ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </button>
+        <button id="theme-toggle-btn" class="icon-btn" title="Toggle Theme">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Title Section -->
+    <section class="hero-section">
+      <h2 class="hero-title">Offline UPI Payments</h2>
+      <p class="hero-subtitle">Scan a QR code, pay with <code>*99#</code>. No internet needed.</p>
+    </section>
+
+    <!-- Primary Action Card: Scan QR Code -->
+    <section class="qr-main-card">
+      <div class="qr-graphic-box">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"></path><path d="M20 7V4h-3"></path><path d="M4 17v3h3"></path><path d="M20 17v3h-3"></path><rect x="9" y="9" width="6" height="6" rx="1"></rect></svg>
+      </div>
+      <div>
+        <h3 class="card-heading">Scan QR Code</h3>
+        <p class="card-subtext">The UPI ID is copied automatically.</p>
+      </div>
+
+      <div class="scan-actions-row">
+        <button id="scan-now-btn" class="btn-scan-main">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7V4h3"></path><path d="M20 7V4h-3"></path><path d="M4 17v3h3"></path><path d="M20 17v3h-3"></path></svg>
+          <span>Scan Now</span>
+        </button>
+
+        <label class="btn-upload-icon" title="Upload QR from Gallery">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <input type="file" id="gallery-qr-input" accept="image/*" style="display: none;" />
+        </label>
+      </div>
+    </section>
+
+    <!-- 2-Column Action Cards Grid -->
+    <section class="actions-grid">
+      <div id="btn-open-send-modal" class="action-tile-card">
+        <div class="tile-icon-box icon-box-emerald">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+        </div>
+        <div>
+          <h4 class="tile-title">Send to UPI ID</h4>
+          <span class="tile-code">*99*1*3#</span>
+        </div>
+      </div>
+
+      <div id="btn-check-balance" class="action-tile-card">
+        <div class="tile-icon-box icon-box-cyan">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="7" y1="8" x2="17" y2="8"></line></svg>
+        </div>
+        <div>
+          <h4 class="tile-title">Check Balance</h4>
+          <span class="tile-code">*99*3#</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Help & FAQ Action Button -->
+    <section style="display: flex; flex-direction: column; gap: 0.4rem;">
+      <button id="btn-open-help" class="full-action-card">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <span>Help, FAQ & Walkthrough</span>
+      </button>
+      <p class="section-caption">Set up your bank, how to pay, and use OffPay offline.</p>
+    </section>
+
+    <!-- Footer Made by sachindhisale -->
+    <footer class="app-footer">
+      <p>Made by <strong>sachindhisale</strong></p>
+    </footer>
+
+  </div>
+
+  <!-- MODAL 1: Payment Request Modal -->
+  <div id="payment-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3 class="modal-title">Initiate USSD Payment</h3>
+      
+      <form id="payment-form" onsubmit="return false;">
+        <div class="form-group">
+          <label for="pay-amount">Enter Amount (₹)</label>
+          <div class="amount-input-wrapper">
+            <span class="currency-symbol">₹</span>
+            <input type="number" id="pay-amount" class="amount-input" placeholder="500" min="1" value="500" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="payee-upi">Recipient UPI ID / Mobile</label>
+          <input type="text" id="payee-upi" class="text-input" placeholder="merchant@upi" value="merchant@upi" required />
+        </div>
+
+        <div class="form-group">
+          <label for="payee-name">Payee Name (Optional)</label>
+          <input type="text" id="payee-name" class="text-input" placeholder="Store Name" value="Merchant Store" />
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
+          <button type="button" id="pay-ussd-btn" class="btn btn-primary btn-block">
+            <span>Pay via USSD (*99#)</span>
+          </button>
+          <button type="button" id="copy-ussd-btn" class="btn btn-secondary btn-block">
+            <span>Copy *99#</span>
+          </button>
+          <button type="button" id="close-payment-modal-btn" class="btn btn-ghost btn-block">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Pre-dialer Launch Safety Notice -->
+  <div id="pre-dialer-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3 class="modal-title">Opening Phone Dialer</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted);">USSD payment will open your phone dialer. You may need to press the Call button manually.</p>
+      <div style="background: var(--bg-input); padding: 1rem; border-radius: var(--radius-md); text-align: center;">
+        <span style="font-size: 1.6rem; font-weight: 800; color: #10B981; font-family: var(--font-mono);">*99#</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <button id="confirm-launch-btn" class="btn btn-primary btn-block">Launch Dialer Now</button>
+        <button id="cancel-launch-btn" class="btn btn-ghost btn-block">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Post Return Verification ("Did you complete the payment?") -->
+  <div id="payment-verification-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3 class="modal-title">Confirm Payment Status</h3>
+      <div style="background: var(--bg-input); padding: 0.85rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem;">
+        <p>Payee: <strong id="verify-payee-name">Merchant Store</strong></p>
+        <p>Amount: <strong id="verify-amount" style="color: #10B981;">₹500.00</strong></p>
+      </div>
+      <p style="text-align: center; font-size: 1.05rem; font-weight: 700;">Did you complete the payment?</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+        <button id="verify-completed-btn" class="btn btn-success">Payment Completed</button>
+        <button id="verify-failed-btn" class="btn btn-danger">Payment Failed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: Camera QR Scanner -->
+  <div id="qr-scanner-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3 class="modal-title">Scan UPI QR Code</h3>
+      <div class="scanner-video-box">
+        <video id="scanner-video"></video>
+        <canvas id="scanner-canvas" style="display: none;"></canvas>
+        <div class="scanner-guide-box"></div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+        <input type="text" id="manual-upi-uri-input" class="text-input" placeholder="Or paste upi://pay?pa=... string" />
+        <button id="parse-upi-uri-btn" class="btn btn-secondary">Parse URI</button>
+        <button id="close-scanner-btn" class="btn btn-ghost">Cancel Scanner</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 5: Help, FAQ & Walkthrough -->
+  <div id="help-modal" class="modal-overlay hidden">
+    <div class="modal-card" style="max-width: 440px; max-height: 85vh; overflow-y: auto;">
+      <h3 class="modal-title">Help & Setup Guide</h3>
+      
+      <div style="font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 0.85rem;">
+        <div>
+          <strong style="color: var(--text-main); font-size: 0.95rem;">1. One-Time USSD Setup</strong>
+          <p>Dial <code>*99#</code> from your registered SIM card (Airtel, VI, BSNL). Select your bank name and set up your 4 or 6-digit UPI PIN.</p>
+        </div>
+
+        <div>
+          <strong style="color: var(--text-main); font-size: 0.95rem;">2. How to Pay Offline</strong>
+          <p>Scan any merchant UPI QR code using OffPay or enter recipient UPI ID. OffPay will launch your phone dialer with <code>*99#</code> pre-filled.</p>
+        </div>
+
+        <div style="background: var(--warning-bg); border: 1px solid rgba(245, 158, 11, 0.3); padding: 0.75rem; border-radius: var(--radius-md); color: #FDE68A;">
+          <strong style="color: #FBBF24;">Reliance Jio SIM Notice</strong>
+          <p>Jio VoLTE networks do not support *99# USSD service. Please dial from an Airtel, VI, or BSNL SIM card, or use offline QR voucher.</p>
+        </div>
+      </div>
+
+      <button id="close-help-modal-btn" class="btn btn-primary btn-block" style="margin-top: 0.5rem;">Close Guide</button>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script type="module" src="./src/js/app.js"></script>
+</body>
+</html>
