@@ -18,20 +18,14 @@ export class USSDController {
 
     this.pendingTx = null;
     this.isDialerLaunched = false;
-    this.isEmulatedMobile = false;
 
     this.initElements();
     this.attachEventListeners();
-    this.checkCarrierAndDevice();
   }
 
   initElements() {
     this.payUssdBtn = document.getElementById('pay-ussd-btn');
     this.copyUssdBtn = document.getElementById('copy-ussd-btn');
-    this.desktopNotice = document.getElementById('desktop-notice');
-    this.jioNotice = document.getElementById('jio-notice');
-    this.unsupportedNotice = document.getElementById('unsupported-notice');
-    this.preDialerNoticeText = document.getElementById('ussd-notice-text');
 
     // Modals
     this.preDialerModal = document.getElementById('pre-dialer-modal');
@@ -48,8 +42,6 @@ export class USSDController {
     this.amountInput = document.getElementById('pay-amount');
     this.payeeNameInput = document.getElementById('payee-name');
     this.payeeUpiInput = document.getElementById('payee-upi');
-    this.paymentNoteInput = document.getElementById('payment-note');
-    this.customerSelect = document.getElementById('customer-select');
   }
 
   attachEventListeners() {
@@ -83,43 +75,9 @@ export class USSDController {
     });
   }
 
-  async checkCarrierAndDevice() {
-    const isMobile = this.isMobileDevice();
-    const profile = await getMerchantProfile();
-    const isJioCarrier = profile && (profile.simCarrier === 'Jio' || profile.simCarrier === 'JIO');
-
-    // Jio SIM Restriction Banner
-    if (this.jioNotice) {
-      if (isJioCarrier) {
-        this.jioNotice.classList.remove('hidden');
-      } else {
-        this.jioNotice.classList.add('hidden');
-      }
-    }
-
-    // Desktop vs Mobile Notice
-    if (!isMobile) {
-      if (this.desktopNotice) this.desktopNotice.classList.remove('hidden');
-      if (this.preDialerNoticeText) {
-        this.preDialerNoticeText.textContent = 'USSD payments are available on mobile devices.';
-      }
-    } else {
-      if (this.desktopNotice) this.desktopNotice.classList.add('hidden');
-      if (this.preDialerNoticeText) {
-        this.preDialerNoticeText.textContent = 'USSD payment will open your phone dialer. You may need to press the Call button manually.';
-      }
-    }
-  }
-
   isMobileDevice() {
-    if (this.isEmulatedMobile) return true;
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-  }
-
-  setEmulatedMobile(isMobile) {
-    this.isEmulatedMobile = isMobile;
-    this.checkCarrierAndDevice();
   }
 
   async handlePayUssdClick() {
@@ -130,15 +88,14 @@ export class USSDController {
       return;
     }
 
-    const profile = await getMerchantProfile();
-    if (profile && (profile.simCarrier === 'Jio' || profile.simCarrier === 'JIO')) {
-      this.showToast('Reliance Jio networks do not support *99# USSD. Please use Offline QR or SMS Banking.', 'warning');
+    const upi = this.payeeUpiInput?.value?.trim();
+    if (!upi) {
+      this.showToast('Please enter recipient UPI ID or mobile number', 'warning');
+      this.payeeUpiInput?.focus();
+      return;
     }
 
-    const payee = this.payeeNameInput?.value?.trim() || profile.businessName || 'Merchant';
-    const upi = this.payeeUpiInput?.value?.trim() || profile.payeeUpi || '';
-    const note = this.paymentNoteInput?.value?.trim() || 'USSD Transfer';
-    const customerId = this.customerSelect?.value || null;
+    const payee = this.payeeNameInput?.value?.trim() || 'Merchant';
 
     this.pendingTx = {
       id: generateTxId(),
@@ -146,8 +103,7 @@ export class USSDController {
       payee,
       upi,
       amount,
-      note,
-      customerId,
+      note: 'USSD Payment',
       method: 'USSD (*99#)',
       status: 'PENDING'
     };
@@ -178,11 +134,9 @@ export class USSDController {
     this.isDialerLaunched = true;
 
     try {
-      // Launch native phone dialer with *99%23 pre-filled
       window.location.href = USSD_TEL_URI;
     } catch (err) {
       console.error('Failed to launch tel: URI', err);
-      if (this.unsupportedNotice) this.unsupportedNotice.classList.remove('hidden');
       this.showToast("USSD dialing isn't supported by this browser. Please dial *99# manually.", 'warning');
     }
 
@@ -257,7 +211,7 @@ export class USSDController {
     this.pendingTx.status = 'FAILED';
     await saveTransactionDB(this.pendingTx);
 
-    this.showToast('Payment recorded as Failed/Unpaid.', 'warning');
+    this.showToast('Payment marked as Failed/Unpaid.', 'warning');
 
     this.pendingTx = null;
     this.isDialerLaunched = false;

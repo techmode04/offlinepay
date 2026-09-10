@@ -53,7 +53,7 @@
     <!-- Primary Action Card: Scan QR Code -->
     <section class="qr-main-card">
       <div class="qr-graphic-box">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"></path><path d="M20 7V4h-3"></path><path d="M4 17v3h3"></path><path d="M20 17v3h-3"></path><rect x="9" y="9" width="6" height="6" rx="1"></rect></svg>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3"></path><path d="M20 7V4h-3"></path><path d="M4 17v3h3"></path><path d="M20 17v3h-3"></path><rect x="9" y="9" width="6" height="6" rx="1"></rect></svg>
       </div>
       <div>
         <h3 class="card-heading">Scan QR Code</h3>
@@ -62,12 +62,12 @@
 
       <div class="scan-actions-row">
         <button id="scan-now-btn" class="btn-scan-main">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7V4h3"></path><path d="M20 7V4h-3"></path><path d="M4 17v3h3"></path><path d="M20 17v3h-3"></path></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7V4h3"></path><path d="M20 7V4h-3"></path><path d="M4 17v3h3"></path><path d="M20 17v3h-3"></path></svg>
           <span>Scan Now</span>
         </button>
 
         <label class="btn-upload-icon" title="Upload QR from Gallery">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
           <input type="file" id="gallery-qr-input" accept="image/*" style="display: none;" />
         </label>
       </div>
@@ -77,7 +77,7 @@
     <section class="actions-grid">
       <div id="btn-open-send-modal" class="action-tile-card">
         <div class="tile-icon-box icon-box-emerald">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
         </div>
         <div>
           <h4 class="tile-title">Send to UPI ID</h4>
@@ -87,7 +87,7 @@
 
       <div id="btn-check-balance" class="action-tile-card">
         <div class="tile-icon-box icon-box-cyan">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="7" y1="8" x2="17" y2="8"></line></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="7" y1="8" x2="17" y2="8"></line></svg>
         </div>
         <div>
           <h4 class="tile-title">Check Balance</h4>
@@ -97,12 +97,35 @@
     </section>
 
     <!-- Help & FAQ Action Button -->
-    <section style="display: flex; flex-direction: column; gap: 0.4rem;">
+    <section style="display: flex; flex-direction: column; gap: 0.35rem;">
       <button id="btn-open-help" class="full-action-card">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
         <span>Help, FAQ & Walkthrough</span>
       </button>
       <p class="section-caption">Set up your bank, how to pay, and use OffPay offline.</p>
+    </section>
+
+    <!-- Amber Warning Info Card -->
+    <section class="warning-info-card">
+      <div class="warning-item">
+        <div class="warning-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </div>
+        <div class="warning-text-box">
+          <h4>Does not work on Jio</h4>
+          <p>Jio SIMs have no <code>*99#</code> service.</p>
+        </div>
+      </div>
+
+      <div class="warning-item">
+        <div class="warning-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </div>
+        <div class="warning-text-box">
+          <h4>Not for vending machines</h4>
+          <p>They need an order ID that <code>*99#</code> can't send.</p>
+        </div>
+      </div>
     </section>
 
     <!-- Footer Made by sachindhisale -->
@@ -122,18 +145,18 @@
           <label for="pay-amount">Enter Amount (₹)</label>
           <div class="amount-input-wrapper">
             <span class="currency-symbol">₹</span>
-            <input type="number" id="pay-amount" class="amount-input" placeholder="500" min="1" value="500" required />
+            <input type="number" id="pay-amount" class="amount-input" placeholder="0" min="1" value="" required />
           </div>
         </div>
 
         <div class="form-group">
           <label for="payee-upi">Recipient UPI ID / Mobile</label>
-          <input type="text" id="payee-upi" class="text-input" placeholder="merchant@upi" value="merchant@upi" required />
+          <input type="text" id="payee-upi" class="text-input" placeholder="e.g. username@upi or mobile" value="" required />
         </div>
 
         <div class="form-group">
           <label for="payee-name">Payee Name (Optional)</label>
-          <input type="text" id="payee-name" class="text-input" placeholder="Store Name" value="Merchant Store" />
+          <input type="text" id="payee-name" class="text-input" placeholder="Payee / Store Name (Optional)" value="" />
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;">
@@ -169,8 +192,8 @@
     <div class="modal-card">
       <h3 class="modal-title">Confirm Payment Status</h3>
       <div style="background: var(--bg-input); padding: 0.85rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem;">
-        <p>Payee: <strong id="verify-payee-name">Merchant Store</strong></p>
-        <p>Amount: <strong id="verify-amount" style="color: #10B981;">₹500.00</strong></p>
+        <p>Payee: <strong id="verify-payee-name">Merchant</strong></p>
+        <p>Amount: <strong id="verify-amount" style="color: #10B981;">₹0.00</strong></p>
       </div>
       <p style="text-align: center; font-size: 1.05rem; font-weight: 700;">Did you complete the payment?</p>
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
