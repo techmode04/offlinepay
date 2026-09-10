@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>OfflinePay - Mobile USSD (*99#) & Offline Payments</title>
+  <meta name="description" content="Pay without internet using NPCI *99# USSD mobile banking." />
+  
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#10B981" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./src/css/style.css" />
+</head>
+<body>
+  <div id="app" class="app-container">
+    
+    <!-- Top Bar Header -->
+    <header class="top-bar">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+        </div>
+        <div>
+          <h1 class="logo-title">Offline<span class="highlight">Pay</span></h1>
+          <span class="subtitle">USSD *99# Mobile Banking</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="open-qr-scanner-btn" class="pill-btn active" title="Scan UPI QR Code">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Scan QR</span>
+        </button>
+
+        <button id="theme-toggle-btn" class="pill-btn" title="Toggle Theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle></svg>
+        </button>
+
+        <button id="soundbox-toggle-btn" class="pill-btn sound-toggle active" title="Soundbox Alerts">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- PWA Install Banner -->
+    <div id="pwa-install-banner" class="pwa-banner hidden">
+      <span>Install <strong>OfflinePay Mobile App</strong> for instant offline payments!</span>
+      <button id="pwa-install-btn" class="btn btn-primary btn-sm">Install</button>
+    </div>
+
+    <!-- Mobile-First Bottom Navigation Bar -->
+    <nav class="app-nav">
+      <a href="#" class="nav-link active" data-target="pay">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <span>Pay</span>
+      </a>
+      <a href="#" class="nav-link" data-target="codes">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+        <span>USSD Codes</span>
+      </a>
+      <a href="#" class="nav-link" data-target="guide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span>Setup Guide</span>
+      </a>
+      <a href="#" class="nav-link" data-target="transactions">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+        <span>History</span>
+      </a>
+      <a href="#" class="nav-link" data-target="customers">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+        <span>Khata</span>
+      </a>
+      <a href="#" class="nav-link" data-target="reports">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line></svg>
+        <span>Reports</span>
+      </a>
+      <a href="#" class="nav-link" data-target="settings">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle></svg>
+        <span>Settings</span>
+      </a>
+    </nav>
+
+    <!-- SECTION 1: PAY REQUEST -->
+    <section id="section-pay" class="app-section active">
+      <div class="payment-card">
+        <div class="card-header">
+          <div>
+            <span class="badge"><span class="dot"></span> No Internet Needed</span>
+            <h2>New USSD Payment</h2>
+          </div>
+        </div>
+
+        <form id="payment-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="pay-amount">Enter Amount (₹)</label>
+            <div class="amount-input-wrapper">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="pay-amount" class="amount-input" placeholder="500" min="1" value="500" required />
+            </div>
+            <div class="quick-amounts">
+              <button type="button" class="chip-btn" data-amt="100">+ ₹100</button>
+              <button type="button" class="chip-btn" data-amt="500">+ ₹500</button>
+              <button type="button" class="chip-btn" data-amt="1000">+ ₹1,000</button>
+              <button type="button" class="chip-btn" data-amt="2000">+ ₹2,000</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-select">Link to Customer (Khata Ledger)</label>
+            <select id="customer-select" class="text-input">
+              <option value="">-- Direct Merchant Payment --</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="payee-name">Payee / Merchant Name</label>
+              <input type="text" id="payee-name" class="text-input" placeholder="e.g. Rahul Sharma" value="Grocery Store" required />
+            </div>
+            <div class="form-group">
+              <label for="payee-upi">UPI ID / Phone</label>
+              <input type="text" id="payee-upi" class="text-input" placeholder="merchant@upi" value="merchant@upi" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="payment-note">Payment Note</label>
+            <input type="text" id="payment-note" class="text-input" placeholder="e.g. Supplies" value="Monthly Supplies" />
+          </div>
+
+          <div class="ussd-card-content">
+            <div class="notice-box info-notice">
+              <p id="ussd-notice-text">USSD payment will open your phone dialer. You may need to press the Call button manually.</p>
+            </div>
+
+            <!-- Reliance Jio Carrier Alert -->
+            <div id="jio-notice" class="notice-box warning-notice hidden">
+              <div>
+                <strong style="color: #FBBF24;">Jio SIM Network Notice</strong>
+                <p>Reliance Jio VoLTE networks do not support *99# USSD banking. Please use an Airtel, VI, or BSNL SIM card, or scan offline QR.</p>
+              </div>
+            </div>
+
+            <div id="desktop-notice" class="notice-box warning-notice hidden">
+              <p><strong>Desktop Mode:</strong> USSD payments are available on mobile devices.</p>
+            </div>
+
+            <div class="action-buttons-group">
+              <button type="button" id="pay-ussd-btn" class="btn btn-primary btn-large btn-block">
+                <span>Pay via USSD (*99#)</span>
+              </button>
+              <button type="button" id="copy-ussd-btn" class="btn btn-secondary btn-block">
+                <span>Copy *99#</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- SECTION 2: QUICK USSD BANK CODES & DIRECT DIALER PAGE -->
+    <section id="section-codes" class="app-section">
+      <div class="tx-card">
+        <div class="card-header">
+          <div>
+            <h2>Quick USSD Bank Codes</h2>
+            <span class="subtitle">Tap any button to open phone dialer directly</span>
+          </div>
+        </div>
+
+        <div class="codes-grid">
+          <div class="code-item-card">
+            <div class="code-info">
+              <span class="code-num">*99#</span>
+              <div>
+                <strong>Main UPI Banking Menu</strong>
+                <span class="code-desc">Access full NUUP banking menu</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm btn-dial-code" data-tel="tel:*99%23" data-label="*99# Main Menu">Dial Now</button>
+          </div>
+
+          <div class="code-item-card">
+            <div class="code-info">
+              <span class="code-num">*99*1#</span>
+              <div>
+                <strong>Send Money</strong>
+                <span class="code-desc">Direct money transfer</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm btn-dial-code" data-tel="tel:*99*1%23" data-label="*99*1# Send Money">Dial Now</button>
+          </div>
+
+          <div class="code-item-card">
+            <div class="code-info">
+              <span class="code-num">*99*3#</span>
+              <div>
+                <strong>Check Account Balance</strong>
+                <span class="code-desc">Instant balance check</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm btn-dial-code" data-tel="tel:*99*3%23" data-label="*99*3# Check Balance">Dial Now</button>
+          </div>
+
+          <div class="code-item-card">
+            <div class="code-info">
+              <span class="code-num">*99*4#</span>
+              <div>
+                <strong>My Profile & UPI PIN</strong>
+                <span class="code-desc">Change PIN / Check details</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm btn-dial-code" data-tel="tel:*99*4%23" data-label="*99*4# Profile">Dial Now</button>
+          </div>
+
+          <div class="code-item-card">
+            <div class="code-info">
+              <span class="code-num">*99*7#</span>
+              <div>
+                <strong>Change Bank Account</strong>
+                <span class="code-desc">Set primary UPI bank</span>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-sm btn-dial-code" data-tel="tel:*99*7%23" data-label="*99*7# Bank Change">Dial Now</button>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 1.5rem; margin-bottom: 0.75rem;">Major Bank Shortcodes</h3>
+        <div class="bank-codes-list">
+          <div class="bank-row">
+            <span>State Bank of India (SBI)</span>
+            <button class="pill-btn btn-dial-code" data-tel="tel:*99*41%23" data-label="SBI USSD">*99*41# Dial</button>
+          </div>
+          <div class="bank-row">
+            <span>HDFC Bank</span>
+            <button class="pill-btn btn-dial-code" data-tel="tel:*99*43%23" data-label="HDFC USSD">*99*43# Dial</button>
+          </div>
+          <div class="bank-row">
+            <span>ICICI Bank</span>
+            <button class="pill-btn btn-dial-code" data-tel="tel:*99*44%23" data-label="ICICI USSD">*99*44# Dial</button>
+          </div>
+          <div class="bank-row">
+            <span>Punjab National Bank (PNB)</span>
+            <button class="pill-btn btn-dial-code" data-tel="tel:*99*42%23" data-label="PNB USSD">*99*42# Dial</button>
+          </div>
+          <div class="bank-row">
+            <span>Bank of Baroda (BOB)</span>
+            <button class="pill-btn btn-dial-code" data-tel="tel:*99*48%23" data-label="BOB USSD">*99*48# Dial</button>
+          </div>
+          <div class="bank-row">
+            <span>Axis Bank</span>
+            <button class="pill-btn btn-dial-code" data-tel="tel:*99*45%23" data-label="Axis USSD">*99*45# Dial</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: OFFLINE SETUP GUIDE PAGE -->
+    <section id="section-guide" class="app-section">
+      <div class="tx-card">
+        <div class="card-header">
+          <div>
+            <h2>Offline *99# Setup Guide</h2>
+            <span class="subtitle">Complete step-by-step registration & usage guide</span>
+          </div>
+        </div>
+
+        <div class="guide-steps-container">
+          <div class="guide-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h4>Register Mobile Number with Bank</h4>
+              <p>Ensure your SIM card is registered with your bank account for UPI services.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h4>Dial *99# from your SIM</h4>
+              <p>Open phone dialer, type <code>*99#</code> and press Call using your registered GSM SIM (Airtel, VI, BSNL).</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h4>Select Your Bank Name</h4>
+              <p>Type your bank name or first 3 letters (e.g., "SBI" or "HDF") to link your bank account.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h4>Set Up UPI PIN</h4>
+              <p>Enter last 6 digits of debit card & expiry date to create your 4 or 6-digit UPI PIN.</p>
+            </div>
+          </div>
+
+          <div class="guide-step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+              <h4>Send Money Offline</h4>
+              <p>Select Option 1 (Send Money), enter recipient UPI ID or Phone, amount, and your UPI PIN.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice-box warning-notice" style="margin-top: 1.5rem;">
+          <p><strong>Jio SIM Note:</strong> Reliance Jio 4G/5G is a VoLTE-only data network without 2G/3G GSM voice channel, so *99# USSD is restricted on Jio SIM cards. Use Airtel, VI, or BSNL for *99# USSD.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TRANSACTIONS HISTORY -->
+    <section id="section-transactions" class="app-section">
+      <div class="tx-card">
+        <div class="card-header">
+          <h3>Transaction History</h3>
+          <button id="export-csv-btn" class="pill-btn">Export CSV</button>
+        </div>
+        <div class="table-responsive">
+          <table class="tx-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Transaction ID</th>
+                <th>Payee</th>
+                <th>Method</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Receipt</th>
+              </tr>
+            </thead>
+            <tbody id="tx-history-tbody"></tbody>
+          </table>
+        </div>
+        <div id="empty-history-msg" class="empty-state hidden">No transactions recorded yet.</div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: CUSTOMER KHATA LEDGER -->
+    <section id="section-customers" class="app-section">
+      <div class="cust-card">
+        <h3>Add Customer to Khata Ledger</h3>
+        <form id="add-customer-form" style="margin-top: 1rem;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Customer Name</label>
+              <input type="text" id="cust-name" class="text-input" placeholder="e.g. Amit Kumar" required />
+            </div>
+            <div class="form-group">
+              <label>Mobile Phone</label>
+              <input type="tel" id="cust-phone" class="text-input" placeholder="9876543210" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Initial Due Balance (₹)</label>
+            <input type="number" id="cust-dues" class="text-input" placeholder="0" value="0" />
+          </div>
+          <button type="submit" class="btn btn-secondary">Save Customer</button>
+        </form>
+      </div>
+
+      <div class="cust-card">
+        <h3>Customer Khata Records</h3>
+        <div class="table-responsive" style="margin-top: 1rem;">
+          <table class="tx-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Total Paid</th>
+                <th>Due Balance</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="customers-tbody"></tbody>
+          </table>
+        </div>
+        <div id="empty-cust-msg" class="empty-state hidden">No customers added to Khata yet.</div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: REPORTS & ANALYTICS -->
+    <section id="section-reports" class="app-section">
+      <div class="reports-container" id="reports-container"></div>
+    </section>
+
+    <!-- SECTION 7: SETTINGS & PROFILE -->
+    <section id="section-settings" class="app-section">
+      <div class="settings-card">
+        <h3>Merchant Business Profile</h3>
+        <form id="profile-form" style="margin-top: 1rem;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Business Name</label>
+              <input type="text" id="prof-biz-name" class="text-input" value="My Retail Store" required />
+            </div>
+            <div class="form-group">
+              <label>Primary Merchant UPI ID</label>
+              <input type="text" id="prof-upi" class="text-input" value="merchant@upi" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" id="prof-phone" class="text-input" value="9876543210" />
+            </div>
+            <div class="form-group">
+              <label>Primary SIM Carrier</label>
+              <select id="prof-carrier" class="text-input">
+                <option value="Airtel">Airtel (*99# Supported)</option>
+                <option value="VI">Vodafone Idea (*99# Supported)</option>
+                <option value="BSNL">BSNL (*99# Supported)</option>
+                <option value="Jio">Reliance Jio (USSD Not Supported)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>GSTIN Number (Optional)</label>
+            <input type="text" id="prof-gstin" class="text-input" value="27AAAAA0000A1Z5" />
+          </div>
+          <div class="form-group">
+            <label>Store Address</label>
+            <input type="text" id="prof-address" class="text-input" value="Shop 12, Main Market, Mumbai" />
+          </div>
+          <button type="submit" class="btn btn-primary">Save Profile Settings</button>
+        </form>
+      </div>
+
+      <div class="settings-card">
+        <h3>Backup & Restore Database</h3>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem;">
+          <button id="export-json-btn" class="btn btn-secondary">Download JSON Backup</button>
+          <label class="btn btn-secondary" style="cursor: pointer;">
+            <span>Restore Backup File</span>
+            <input type="file" id="import-json-file" accept=".json" style="display: none;" />
+          </label>
+          <button id="clear-db-btn" class="btn btn-danger">Clear Database</button>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <h3>Security PIN Lock</h3>
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+          <button id="set-pin-btn" class="btn btn-secondary">Set 4-Digit Security PIN</button>
+          <button id="disable-pin-btn" class="btn btn-ghost">Disable PIN</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- MODAL: Pre-dialer Launch Safety Notice -->
+  <div id="pre-dialer-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3>Opening Phone Dialer</h3>
+      <p>USSD payment will open your phone dialer. You may need to press the Call button manually.</p>
+      <div class="code-box" style="background: var(--bg-input); padding: 1rem; border-radius: var(--radius-md); text-align: center;">
+        <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary); font-family: var(--font-mono);">*99#</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+        <button id="confirm-launch-btn" class="btn btn-primary btn-block">Launch Dialer Now</button>
+        <button id="cancel-launch-btn" class="btn btn-ghost btn-block">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Post Return Verification ("Did you complete the payment?") -->
+  <div id="payment-verification-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3>Confirm Payment Status</h3>
+      <div style="background: var(--bg-input); padding: 1rem; border-radius: var(--radius-md);">
+        <p>Payee: <strong id="verify-payee-name">Grocery Store</strong></p>
+        <p>Amount: <strong id="verify-amount" style="color: var(--primary);">₹500.00</strong></p>
+      </div>
+      <p style="text-align: center; font-size: 1.1rem; font-weight: 700;">Did you complete the payment?</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+        <button id="verify-completed-btn" class="btn btn-success">Payment Completed</button>
+        <button id="verify-failed-btn" class="btn btn-danger">Payment Failed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Digital Receipt -->
+  <div id="receipt-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div style="text-align: center;">
+        <h3 id="receipt-status-title">Payment Successful</h3>
+        <p id="receipt-amount" style="font-size: 2rem; font-weight: 800; color: var(--primary);">₹500.00</p>
+      </div>
+      <div style="border-top: 1px dashed var(--border-color); padding-top: 1rem; font-size: 0.88rem; display: flex; flex-direction: column; gap: 0.4rem;">
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">Store</span><strong id="rcpt-store-name">My Retail Store</strong></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">Transaction ID</span><span id="rcpt-txid" class="font-mono">TXN-99-109283</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">Date</span><span id="rcpt-date">10 Sep 2026</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">Payee</span><span id="rcpt-payee">Grocery Store</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">UPI ID</span><span id="rcpt-upi">merchant@upi</span></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-muted);">Status</span><span id="rcpt-status" class="status-paid-tag">PAID</span></div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem;">
+        <button id="print-receipt-btn" class="btn btn-secondary">Print Receipt</button>
+        <button id="close-receipt-btn" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Camera & Gallery QR Code Scanner Overlay -->
+  <div id="qr-scanner-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3>Scan UPI QR Code</h3>
+      <div class="scanner-video-box">
+        <video id="scanner-video"></video>
+        <canvas id="scanner-canvas" style="display: none;"></canvas>
+        <div class="scanner-guide-box"></div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.75rem;">
+        <label class="btn btn-secondary" style="cursor: pointer; text-align: center;">
+          <span>Select QR Image from Gallery</span>
+          <input type="file" id="gallery-qr-input" accept="image/*" style="display: none;" />
+        </label>
+        <input type="text" id="manual-upi-uri-input" class="text-input" placeholder="Or paste upi://pay?pa=merchant@upi string..." />
+        <button id="parse-upi-uri-btn" class="btn btn-secondary">Parse String</button>
+        <button id="close-scanner-btn" class="btn btn-ghost">Cancel Scanner</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Security PIN Lock Overlay -->
+  <div id="pin-lock-overlay" class="modal-overlay hidden" style="z-index: 3000;">
+    <div class="modal-card" style="text-align: center;">
+      <h3>Merchant PIN Security</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Enter 4-digit security PIN to unlock</p>
+      <div class="pin-dots" id="pin-dots-display">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <p id="pin-error-msg" class="hidden" style="color: var(--danger); font-size: 0.85rem;"></p>
+      <div class="pin-keypad" id="pin-keypad">
+        <button class="pin-key" data-key="1">1</button><button class="pin-key" data-key="2">2</button><button class="pin-key" data-key="3">3</button>
+        <button class="pin-key" data-key="4">4</button><button class="pin-key" data-key="5">5</button><button class="pin-key" data-key="6">6</button>
+        <button class="pin-key" data-key="7">7</button><button class="pin-key" data-key="8">8</button><button class="pin-key" data-key="9">9</button>
+        <button class="pin-key" data-key="clear">C</button><button class="pin-key" data-key="0">0</button><button class="pin-key" data-key="back">&larr;</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script type="module" src="./src/js/app.js"></script>
+</body>
+</html>
