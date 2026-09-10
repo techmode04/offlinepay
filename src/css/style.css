@@ -608,3 +608,66 @@ label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
 
 .toast-success { border-color: var(--accent-emerald); }
 .toast-warning { border-color: var(--warning); }
+
+/* PWA Install Banner Card */
+.pwa-banner-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(99, 102, 241, 0.12));
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  box-shadow: 0 4px 18px rgba(16, 185, 129, 0.1);
+  transition: all 0.25s ease;
+}
+
+.pwa-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pwa-banner-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: #10B981;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pwa-banner-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pwa-banner-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.btn-install-pwa {
+  background: #10B981;
+  color: #000;
+  border: none;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.82rem;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-install-pwa:active {
+  transform: scale(0.95);
+}

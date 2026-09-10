@@ -126,7 +126,7 @@ class OffPayApp {
     }
   }
 
-  handleScanSuccess(parsedData) {
+  async handleScanSuccess(parsedData) {
     const payeeUpiInput = document.getElementById('payee-upi');
     const payeeNameInput = document.getElementById('payee-name');
     const amtInput = document.getElementById('pay-amount');
@@ -136,19 +136,49 @@ class OffPayApp {
     if (parsedData.payeeName && payeeNameInput) payeeNameInput.value = parsedData.payeeName;
     if (parsedData.amount && amtInput) amtInput.value = parsedData.amount;
 
+    if (parsedData.upiId) {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(parsedData.upiId);
+        }
+        this.showToast(`UPI ID copied: ${parsedData.upiId}`, 'success');
+      } catch (e) {
+        this.showToast(`Scanned UPI: ${parsedData.upiId}`, 'info');
+      }
+    }
+
     if (paymentModal) paymentModal.classList.remove('hidden');
   }
 
   attachPWAEvents() {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('[SW] Registered successfully scope:', reg.scope))
+          .catch(err => console.log('[SW] Registration failed:', err));
       });
+    }
+
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installTopBtn = document.getElementById('pwa-install-top-btn');
+    const installMainBtn = document.getElementById('pwa-install-main-btn');
+
+    // Check if app is already running in standalone mode (installed)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    if (isStandalone && installBanner) {
+      installBanner.style.display = 'none';
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       this.deferredInstallPrompt = e;
+      if (installBanner) installBanner.style.display = 'flex';
+    });
+
+    window.addEventListener('appinstalled', () => {
+      this.deferredInstallPrompt = null;
+      if (installBanner) installBanner.style.display = 'none';
+      this.showToast('OffPay App Installed Successfully!', 'success');
     });
 
     const triggerInstall = async () => {
@@ -160,15 +190,17 @@ class OffPayApp {
         }
         this.deferredInstallPrompt = null;
       } else {
-        this.showToast('To install: open browser menu and select "Add to Home Screen"', 'info');
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS) {
+          this.showToast('iOS: Tap Share icon in Safari → "Add to Home Screen"', 'info');
+        } else {
+          this.showToast('Android: Tap 3 dots menu → "Add to Home Screen" or "Install App"', 'info');
+        }
       }
     };
 
-    const installTopBtn = document.getElementById('pwa-install-top-btn');
-    const installBottomBtn = document.getElementById('pwa-install-bottom-btn');
-
     if (installTopBtn) installTopBtn.addEventListener('click', triggerInstall);
-    if (installBottomBtn) installBottomBtn.addEventListener('click', triggerInstall);
+    if (installMainBtn) installMainBtn.addEventListener('click', triggerInstall);
   }
 
   async toggleTheme() {

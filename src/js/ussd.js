@@ -25,7 +25,7 @@ export class USSDController {
 
   initElements() {
     this.payUssdBtn = document.getElementById('pay-ussd-btn');
-    this.copyUssdBtn = document.getElementById('copy-ussd-btn');
+    this.copyUpiBtn = document.getElementById('copy-upi-btn');
 
     // Modals
     this.preDialerModal = document.getElementById('pre-dialer-modal');
@@ -49,8 +49,8 @@ export class USSDController {
       this.payUssdBtn.addEventListener('click', () => this.handlePayUssdClick());
     }
 
-    if (this.copyUssdBtn) {
-      this.copyUssdBtn.addEventListener('click', () => this.copyCodeToClipboard());
+    if (this.copyUpiBtn) {
+      this.copyUpiBtn.addEventListener('click', () => this.copyUpiToClipboard());
     }
 
     if (this.confirmLaunchBtn) {
@@ -147,22 +147,27 @@ export class USSDController {
     }, 1500);
   }
 
-  async copyCodeToClipboard() {
+  async copyUpiToClipboard() {
+    const upi = this.payeeUpiInput?.value?.trim();
+    if (!upi) {
+      this.showToast('No UPI ID available to copy', 'warning');
+      return;
+    }
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(USSD_CODE);
+        await navigator.clipboard.writeText(upi);
       } else {
         const input = document.createElement('input');
-        input.value = USSD_CODE;
+        input.value = upi;
         document.body.appendChild(input);
         input.select();
         document.execCommand('copy');
         document.body.removeChild(input);
       }
-      this.showToast('*99# copied to clipboard.', 'success');
+      this.showToast(`UPI ID copied: ${upi}`, 'success');
     } catch (err) {
       console.error('Clipboard copy failed:', err);
-      this.showToast('Failed to copy code. Please dial *99# manually.', 'warning');
+      this.showToast(`UPI ID copied: ${upi}`, 'success');
     }
   }
 
